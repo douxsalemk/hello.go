@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"reflect"
+	"time"
 )
 
 func main() {
@@ -59,7 +60,20 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	site := "https://www.alura.com.br"
+
+	sites := []string{"https://random-status-code.herokuapp.com/",
+		"https://www.alura.com.br", "https://www.caelum.com.br"}
+
+	for i, site := range sites {
+		fmt.Println("Testando site", i, ":", site)
+		testaSite(site)
+	}
+
+	fmt.Println("")
+}
+
+func testaSite(site string) {
+
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
@@ -67,4 +81,5 @@ func iniciarMonitoramento() {
 	} else {
 		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
 	}
+	time.Sleep(1 * time.Second)
 }
